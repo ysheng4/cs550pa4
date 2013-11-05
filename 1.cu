@@ -23,14 +23,6 @@ __device__ char *match(const char *s1, const char *s2){
   return (char*)NULL;
 }
 
-__device__ char *copy(char *dest, char *src, int n)
-{
-    char *tmp = dest;
-        const char *s = src; 
-        while (n--) *tmp++ = *s++ ; 
-        return dest;
-}
-
 
 __global__ void grep(char *myFile, char *myregex, char *result, int line, int width){
     int i = blockDim.x * blockIdx.x + threadIdx.x;
@@ -45,29 +37,22 @@ __global__ void grep(char *myFile, char *myregex, char *result, int line, int wi
 
 int main(int argc, char* argv[])
 {
-        char *fn = argv[1];
+    char *fn = argv[1];
     char *re = argv[2];
-        char **file;
+    char **file;
     char *result;
-        FILE *f;
-        f = fopen(fn, "r");
-        file = (char **)malloc(sizeof(char*)*1024);
+    FILE *f;
+    f = fopen(fn, "r");
+    file = (char **)malloc(sizeof(char*)*1024);
     result = (char *)malloc(sizeof(char)*1024*256);
     file[0] = (char *)malloc(sizeof(char)*1024*256);        
     int i,j=1;
     
     if(re==NULL||fn==NULL){
-        printf("input:file name expression\n");
+        printf("input string or file");
         return -1;
     }
    
-        
-    if(f == NULL)
-    {
-        printf("can not open file!\n");
-        return -1;
-    }
-
             
     while(j<1024)
 	{
@@ -98,7 +83,6 @@ int main(int argc, char* argv[])
         if(&result[i*256] != NULL)
             printf("%s", &result[i*256]);
     }
-
 
 
     return 0;
