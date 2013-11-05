@@ -89,7 +89,9 @@ int main(int argc, char* argv[])
     grep<<<ceil((double)1024/256), 256>>>(myfile, myregex, myresult, 1024, 256);
         // Copying results back to host
     cudaMemcpy(result, myresult, sizeof(char)*1024*256, cudaMemcpyDeviceToHost);
-    
+  	cudaFree(myfile);    
+	cudaFree(myregex);
+	cudaFree(myresult);  
 
     for(i = 0; i < 1024; i++)
     {
@@ -97,9 +99,7 @@ int main(int argc, char* argv[])
             printf("%s", &result[i*256]);
     }
 
-cudaFree(myfile);    
-	cudaFree(myregex);
-	cudaFree(myresult);
+
     return 0;
 	
         
