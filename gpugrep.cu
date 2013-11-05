@@ -24,44 +24,35 @@ __device__ char *match(const char *s1, const char *s2){
 }
 
 
-
-
-__global__ void grep(char *myFile, char *myregex, char *result, int line, int width){
+__global__ void grep(char *myfile, char *myregex, char *result, int line, int width){
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     char *str;
     if(i < line)
     {
-        str = match(&myFile[i*width], myregex);
+        str = match(&myfile[i*width], myregex);
         if(str != NULL)
-            memcpy(&result[i*width], &myFile[i*width], sizeof(char)*width);
+            memcpy(&result[i*width], &myfile[i*width], sizeof(char)*width);
     }
 }
 
 int main(int argc, char* argv[])
 {
-        char *fn = argv[1];
-    char *re = argv[2];
-        char **file;
-    char *result;
-        FILE *f;
-        f = fopen(fn, "r");
-        file = (char **)malloc(sizeof(char*)*1024);
-    result = (char *)malloc(sizeof(char)*1024*256);
+	int i,j=1;
+    char *fn = argv[1],*re = argv[2];
+    char **file = (char **)malloc(sizeof(char*)*1024);
+    char *result= (char *)malloc(sizeof(char)*1024*256);
+	char *myfile, *myregex, *myresult;
+    FILE *f;
+    f = fopen(fn, "r");
     file[0] = (char *)malloc(sizeof(char)*1024*256);        
-    int i,j=1;
     
+    
+
     if(re==NULL||fn==NULL){
-        printf("input:file name expression\n");
+        printf("input string or file");
         return -1;
     }
    
-        
-    if(f == NULL)
-    {
-        printf("can not open file!\n");
-        return -1;
-    }
-
             
     while(j<1024)
 	{
@@ -72,7 +63,7 @@ int main(int argc, char* argv[])
 	}
 
         // Memory allocation
-    char *myfile, *myregex, *myresult;
+    
     cudaMalloc((void**) &myfile, sizeof(char)*1024*256);
     cudaMalloc((void**) &myregex, strlen(re));
     cudaMalloc((void**) &myresult, sizeof(char)*1024*256);
