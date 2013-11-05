@@ -54,7 +54,9 @@ int main(int argc, char* argv[])
         char **file;
 	    char *result;
         FILE *f;
-       
+       f = fopen(fn, "r");    
+		 file[0] = (char *)malloc(sizeof(char)*1024*256); 
+
         file = (char **)malloc(sizeof(char*)*1024);
 		result = (char *)malloc(sizeof(char)*1024*256);
 		       
@@ -64,8 +66,7 @@ int main(int argc, char* argv[])
         printf("input file or string");
         return -1;
     }
-         f = fopen(fn, "r");    
-		 file[0] = (char *)malloc(sizeof(char)*1024*256); 
+         
     while(i<1024){
         file[i] = file[i-1] + 256;
 		fgets(file[i], 256, f);
