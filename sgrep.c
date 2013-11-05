@@ -3,15 +3,15 @@
 #include <string.h>
 
 int main(int argc, char *argv[])
-{			int i=1,j=0;
-			int count=0;
-			char *fn = argv[1];
-			char *re = argv[2];
-            char **file= (char **)malloc(sizeof(char*)*1024);              
-            char *myfile= (char *)malloc(sizeof(char)*1024*256);                                  
-            char *result = (char *)malloc(sizeof(char)*1024*256);
-			char *str;
-            FILE *f;
+{       	    int i=1,j=0;
+		    int count=0;
+		    char *fn = argv[1];
+		    char *re = argv[2];
+                    char **file= (char **)malloc(sizeof(char*)*1024);              
+                    char *myfile= (char *)malloc(sizeof(char)*1024*256);                                  
+                    char *result = (char *)malloc(sizeof(char)*1024*256);
+	            char *str;
+                    FILE *f;
 		    f = fopen(fn, "r");
 			file[0] = (char *)malloc(sizeof(char)*1024*256);
 	
