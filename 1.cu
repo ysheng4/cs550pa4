@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     while(i<1024){
         file[i] = file[i-1] + 256;
 		fgets(file[i], 256, f);
-		i++
+		i++;
 	}
         // Memory allocation
     char *myfile, *myregex, *myresult;
