@@ -37,12 +37,7 @@ __global__ void grep(char *myfile, char *mystring, char *result, int line, int w
 			 }
 				j++;
 		   }
- //   if(i < line)
-  //  {
-   //     str = match(&myfile[i*width], myregex);
-   //     if(str != NULL)
-        //    memcpy(&result[i*width], &myfile[i*width], sizeof(char)*width);
-  //  }
+
 }
 
 int main(int argc, char* argv[])
@@ -73,9 +68,9 @@ int main(int argc, char* argv[])
 // Copying memory to device
     cudaMemcpy(myfile, &file[0][0], sizeof(char)*1024*256, cudaMemcpyHostToDevice);
     cudaMemcpy(mystring, re,  strlen(re), cudaMemcpyHostToDevice);
- // Calling the kernel
+// Calling the kernel
     grep<<<ceil((double)1024/256), 256>>>(myfile, mystring, myresult, 1024, 256);
- // Copying results back to host
+// Copying results back to host
     cudaMemcpy(result, myresult, sizeof(char)*1024*256, cudaMemcpyDeviceToHost);
   	cudaFree(myfile);    
 	cudaFree(mystring);
