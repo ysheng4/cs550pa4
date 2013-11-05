@@ -37,9 +37,9 @@ __global__ void grep(char *myFile, char *myregex, char *result, int line, int wi
     char *str;
     if(i < line)
     {
-        str = match(&myFile[i*width], myregex);
+        str = strstr(&myFile[i*width], myregex);
         if(str != NULL)
-            copy(&result[i*width], &myFile[i*width], sizeof(char)*width);
+            memcpy(&result[i*width], &myFile[i*width], sizeof(char)*width);
     }
 }
 
