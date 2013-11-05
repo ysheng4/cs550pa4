@@ -25,14 +25,24 @@ __device__ char *match(const char *s1, const char *s2){
 
 
 __global__ void grep(char *myfile, char *myregex, char *result, int line, int width){
-    int i = blockDim.x * blockIdx.x + threadIdx.x;
+    int i = blockDim.x * blockIdx.x + threadIdx.x,j=0,count=0;
     char *str;
-    if(i < line)
-    {
-        str = match(&myfile[i*width], myregex);
-        if(str != NULL)
-            memcpy(&result[i*width], &myfile[i*width], sizeof(char)*width);
-    }
+	 while(j<1024)
+		   {
+			 str = strstr(&myfile[j*256], re);
+			 if(str != NULL)
+			 {
+				memcpy(&result[count*256], &myfile[j*256], sizeof(char)*256);
+				count++;			
+			 }
+				j++;
+		   }
+ //   if(i < line)
+  //  {
+   //     str = match(&myfile[i*width], myregex);
+   //     if(str != NULL)
+        //    memcpy(&result[i*width], &myfile[i*width], sizeof(char)*width);
+  //  }
 }
 
 int main(int argc, char* argv[])
