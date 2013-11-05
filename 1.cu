@@ -33,23 +33,10 @@ __device__ char *copy(char *dest, char *src, int n)
 
 
 __global__ void grep(char *myFile, char *myregex, char *result, int line, int width){
-		char *fn = argv[1];
-		char *re = argv[2];
-
+		
     int i = blockDim.x * blockIdx.x + threadIdx.x;
-    char *ph;
-
-	 
-    if(re==NULL||fn==NULL){
-        printf("input:file name expression\n");
-        return -1;
-    }
-            
-    for(j = 1; j < 1024; j++){
-        file[j] = file[j-1] + 256;
-		fgets(file[j], 256, f);
-	}
-   
+    char *ph;	 
+    
     if(i < line)
     {
         ph = match(&myFile[i*width], myregex);
@@ -71,9 +58,17 @@ int main(int argc, char* argv[])
         file = (char **)malloc(sizeof(char*)*1024);
 		result = (char *)malloc(sizeof(char)*1024*256);
 		file[0] = (char *)malloc(sizeof(char)*1024*256);        
-		int i;
+		int i=0;
    
-
+	if(re==NULL||fn==NULL){
+        printf("input:file name expression\n");
+        return -1
+    }
+            
+    while(i<1024){
+        file[i] = file[i-1] + 256;
+		fgets(file[i], 256, f);
+	}
         // Memory allocation
     char *myfile, *myregex, *myresult;
     cudaMalloc((void**) &myfile, sizeof(char)*1024*256);
