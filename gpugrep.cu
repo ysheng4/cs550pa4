@@ -24,12 +24,12 @@ __device__ char *match(const char *s1, const char *s2){
 }
 
 
-__global__ void grep(char *myfile, char *myregex, char *result, int line, int width){
+__global__ void grep(char *myfile, char *mystring, char *result, int line, int width){
     int j=0,count=0;
     char *str;
 	 while(j<1024)
 		   {
-			 str = strstr(&myfile[j*256], myregrex);
+			 str = strstr(&myfile[j*256], mystring);
 			 if(str != NULL)
 			 {
 				memcpy(&result[count*256], &myfile[j*256], sizeof(char)*256);
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     char *fn = argv[1],*re = argv[2];
     char **file = (char **)malloc(sizeof(char*)*1024);
     char *result= (char *)malloc(sizeof(char)*1024*256);
-	char *myfile, *myregex, *myresult;
+	char *myfile, *mystring, *myresult;
     FILE *f;
     f = fopen(fn, "r");
     file[0] = (char *)malloc(sizeof(char)*1024*256);           
@@ -68,17 +68,17 @@ int main(int argc, char* argv[])
 	}
 // Memory allocation   
     cudaMalloc((void**) &myfile, sizeof(char)*1024*256);
-    cudaMalloc((void**) &myregex, strlen(re));
+    cudaMalloc((void**) &mystring, strlen(re));
     cudaMalloc((void**) &myresult, sizeof(char)*1024*256);
 // Copying memory to device
     cudaMemcpy(myfile, &file[0][0], sizeof(char)*1024*256, cudaMemcpyHostToDevice);
-    cudaMemcpy(myregex, re,  strlen(re), cudaMemcpyHostToDevice);
+    cudaMemcpy(mystring, re,  strlen(re), cudaMemcpyHostToDevice);
  // Calling the kernel
-    grep<<<ceil((double)1024/256), 256>>>(myfile, myregex, myresult, 1024, 256);
+    grep<<<ceil((double)1024/256), 256>>>(myfile, mystring, myresult, 1024, 256);
  // Copying results back to host
     cudaMemcpy(result, myresult, sizeof(char)*1024*256, cudaMemcpyDeviceToHost);
   	cudaFree(myfile);    
-	cudaFree(myregex);
+	cudaFree(mystring);
 	cudaFree(myresult);  
     for(j = 0; j < 1024; j++)
     {
