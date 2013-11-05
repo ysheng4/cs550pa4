@@ -24,14 +24,14 @@ __device__ char *match(const char *s1, const char *s2){
 }
 
 
-__global__ void grep(char *myFile, char *myregex, char *result, int line, int width){
+__global__ void grep(char *myfile, char *myregex, char *result, int line, int width){
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     char *str;
     if(i < line)
     {
-        str = match(&myFile[i*width], myregex);
+        str = match(&myfile[i*width], myregex);
         if(str != NULL)
-            memcpy(&result[i*width], &myFile[i*width], sizeof(char)*width);
+            memcpy(&result[i*width], &myfile[i*width], sizeof(char)*width);
     }
 }
 
