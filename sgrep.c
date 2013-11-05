@@ -8,21 +8,23 @@
 
 
 int main(int argc, char *argv[])
-{
-        char *fn = argv[1];
-        char *re = argv[2];
-		char **file;
-	    int i=1,j=0;
-		file = (char **)malloc(sizeof(char*)*1024);
-		char *myfile;
-        myfile = (char *)malloc(sizeof(char)*1024*256);
-		int count=0;
-		char *str;
-		char *result = (char *)malloc(sizeof(char)*1024*256);
-		FILE *f;
-	
-	 if(re==NULL||fn==NULL){
-        printf("input string or file");
+{			int i=1,j=0;
+			int count=0;
+
+
+			  char *fn = argv[1];
+			char *re = argv[2];
+                char **file= (char **)malloc(sizeof(char*)*1024);
+              
+                char *myfile= (char *)malloc(sizeof(char)*1024*256);
+                        
+                char *str;
+                char *result = (char *)malloc(sizeof(char)*1024*256);
+                FILE *f;
+        
+		
+		if(re==NULL||fn==NULL){
+        printf("input file or string");
         return -1;
 			 }
     
