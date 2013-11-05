@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     file[0] = (char *)malloc(sizeof(char)*1024*256);           
     if(re==NULL||fn==NULL)
 	{
-        printf("input string or file");
+        printf("input file or string");
         return -1;
     }               
     while(i<1024)
