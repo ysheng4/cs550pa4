@@ -34,11 +34,11 @@ __device__ char *copy(char *dest, char *src, int n)
 
 __global__ void grep(char *myFile, char *myregex, char *result, int line, int width){
     int i = blockDim.x * blockIdx.x + threadIdx.x;
-    char *ph;
+    char *str;
     if(i < line)
     {
-        ph = match(&myFile[i*width], myregex);
-        if(ph != NULL)
+        str = match(&myFile[i*width], myregex);
+        if(str != NULL)
             copy(&result[i*width], &myFile[i*width], sizeof(char)*width);
     }
 }
