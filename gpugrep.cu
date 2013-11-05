@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-__device__ char *matchstring(const char *s1, const char *s2){
+__device__ char *match(const char *s1, const char *s2){
     if(*s1==0)
   {
     if(*s2) return(char*)NULL;
@@ -23,7 +23,7 @@ __device__ char *matchstring(const char *s1, const char *s2){
   return (char*)NULL;
 }
 
-__device__ char *matchcopy(char *dest, char *src, int n)
+__device__ char *copy(char *dest, char *src, int n)
 {
     char *tmp = dest;
         const char *s = src; 
@@ -34,12 +34,12 @@ __device__ char *matchcopy(char *dest, char *src, int n)
 
 __global__ void grep(char *myFile, char *myregex, char *result, int line, int width){
     int i = blockDim.x * blockIdx.x + threadIdx.x;
-    char *ph;
+    char *str;
     if(i < line)
     {
-        ph = matchstring(&myFile[i*width], myregex);
-        if(ph != NULL)
-            matchcopy(&result[i*width], &myFile[i*width], sizeof(char)*width);
+        str = match(&myFile[i*width], myregex);
+        if(str != NULL)
+            memcpy(&result[i*width], &myFile[i*width], sizeof(char)*width);
     }
 }
 
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
         file = (char **)malloc(sizeof(char*)*1024);
     result = (char *)malloc(sizeof(char)*1024*256);
     file[0] = (char *)malloc(sizeof(char)*1024*256);        
-    int i;
+    int i,j=1;
     
     if(re==NULL||fn==NULL){
         printf("input:file name expression\n");
@@ -69,13 +69,13 @@ int main(int argc, char* argv[])
     }
 
             
-    for(i = 1; i < 1024; i++)
-        file[i] = file[i-1] + 256;
+    while(j<1024)
+	{
+        file[j] = file[j-1] + 256;
 
-    for(i = 0; i < 1024; i++)
-    {
-        fgets(file[i], 256, f);
-    }
+        fgets(file[j], 256, f);
+		j++;
+	}
 
         // Memory allocation
     char *myfile, *myregex, *myresult;
@@ -89,7 +89,9 @@ int main(int argc, char* argv[])
     grep<<<ceil((double)1024/256), 256>>>(myfile, myregex, myresult, 1024, 256);
         // Copying results back to host
     cudaMemcpy(result, myresult, sizeof(char)*1024*256, cudaMemcpyDeviceToHost);
-    
+  	cudaFree(myfile);    
+	cudaFree(myregex);
+	cudaFree(myresult);  
 
     for(i = 0; i < 1024; i++)
     {
@@ -97,6 +99,8 @@ int main(int argc, char* argv[])
             printf("%s", &result[i*256]);
     }
 
+
     return 0;
+	
         
 }
