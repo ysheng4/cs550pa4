@@ -28,25 +28,25 @@ __global__ void grep(char *myfile, char *mystring, char *result, int line, int w
     int j=0,count=0;
     char *str;
 	 while(j<1024)
-		   {
-			 str = match(&myfile[j*256], mystring);
-			 if(str != NULL)
-			 {
+	{
+	     str = match(&myfile[j*256], mystring);
+	     if(str != NULL)
+			  {
 				memcpy(&result[count*256], &myfile[j*256], sizeof(char)*256);
 				count++;			
 			 }
-				j++;
-		   }
+	j++;
+       }
 
 }
 
 int main(int argc, char* argv[])
 {
-	int i=1,j=0;
+    int i=1,j=0;
     char *fn = argv[1],*re = argv[2];
     char **file = (char **)malloc(sizeof(char*)*1024);
     char *result= (char *)malloc(sizeof(char)*1024*256);
-	char *myfile, *mystring, *myresult;
+    char *myfile, *mystring, *myresult;
     FILE *f;
     f = fopen(fn, "r");
     file[0] = (char *)malloc(sizeof(char)*1024*256);           
