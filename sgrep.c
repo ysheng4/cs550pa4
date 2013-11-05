@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 			i++;
 		   }
 
-		   
+		   memcpy(myfile, &file[0][0], sizeof(char) * 1024*256);
    
 		   while(j<1024)
 		   {
