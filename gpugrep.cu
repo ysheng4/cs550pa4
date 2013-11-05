@@ -29,7 +29,7 @@ __global__ void grep(char *myfile, char *mystring, char *result, int line, int w
     char *str;
 	 while(j<1024)
 		   {
-			 str = strstr(&myfile[j*256], mystring);
+			 str = match(&myfile[j*256], mystring);
 			 if(str != NULL)
 			 {
 				memcpy(&result[count*256], &myfile[j*256], sizeof(char)*256);
