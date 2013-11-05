@@ -23,13 +23,7 @@ __device__ char *match(const char *s1, const char *s2){
   return (char*)NULL;
 }
 
-__device__ char *copy(char *dest, char *src, int n)
-{
-    char *tmp = dest;
-        const char *s = src; 
-        while (n--) *tmp++ = *s++ ; 
-        return dest;
-}
+
 
 
 __global__ void grep(char *myFile, char *myregex, char *result, int line, int width){
