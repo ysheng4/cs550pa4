@@ -97,9 +97,10 @@ int main(int argc, char* argv[])
             printf("%s", &result[i*256]);
     }
 
-    return 0;
-	cudaFree(myfile);    
+cudaFree(myfile);    
 	cudaFree(myregex);
-	cudaFree(myreresult);
+	cudaFree(myresult);
+    return 0;
+	
         
 }
