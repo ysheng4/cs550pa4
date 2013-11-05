@@ -10,28 +10,21 @@
 int main(int argc, char *argv[])
 {			int i=1,j=0;
 			int count=0;
-
-
-			  char *fn = argv[1];
+			char *fn = argv[1];
 			char *re = argv[2];
-                char **file= (char **)malloc(sizeof(char*)*1024);
-              
-                char *myfile= (char *)malloc(sizeof(char)*1024*256);
-                        
-                char *str;
-                char *result = (char *)malloc(sizeof(char)*1024*256);
-                FILE *f;
-        
-		
-		if(re==NULL||fn==NULL){
+            char **file= (char **)malloc(sizeof(char*)*1024);              
+            char *myfile= (char *)malloc(sizeof(char)*1024*256);                       
+            char *str;
+            char *result = (char *)malloc(sizeof(char)*1024*256);
+            FILE *f;
+		    f = fopen(fn, "r");
+			file[0] = (char *)malloc(sizeof(char)*1024*256);
+	
+	if(re==NULL||fn==NULL){
         printf("input file or string");
         return -1;
 			 }
-    
-	 f = fopen(fn, "r");
-
-    file[0] = (char *)malloc(sizeof(char)*1024*256);
-
+   	
     while(i<1024){
         file[i] = file[i-1] + 256;
 		fgets(file[i], 256, f);
