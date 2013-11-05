@@ -54,10 +54,11 @@ int main(int argc, char* argv[])
         char **file;
 	    char *result;
         FILE *f;
-       f = fopen(fn, "r");    
+       f = fopen(fn, "r");  
+	   file = (char **)malloc(sizeof(char*)*1024);
 		 file[0] = (char *)malloc(sizeof(char)*1024*256); 
 
-        file = (char **)malloc(sizeof(char*)*1024);
+        
 		result = (char *)malloc(sizeof(char)*1024*256);
 		       
 		int i=0,j;
