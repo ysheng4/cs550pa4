@@ -58,11 +58,11 @@ int main(int argc, char* argv[])
         file = (char **)malloc(sizeof(char*)*1024);
 		result = (char *)malloc(sizeof(char)*1024*256);
 		file[0] = (char *)malloc(sizeof(char)*1024*256);        
-		int i=0;
+		int i=0,j;
    
 	if(re==NULL||fn==NULL){
         printf("input:file name expression\n");
-        return -1
+        return -1;
     }
             
     while(i<1024){
