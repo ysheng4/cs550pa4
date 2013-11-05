@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-__device__ char *matchstring(const char *s1, const char *s2){
+__device__ char *match(const char *s1, const char *s2){
     if(*s1==0)
   {
     if(*s2) return(char*)NULL;
@@ -23,7 +23,7 @@ __device__ char *matchstring(const char *s1, const char *s2){
   return (char*)NULL;
 }
 
-__device__ char *matchcopy(char *dest, char *src, int n)
+__device__ char *copy(char *dest, char *src, int n)
 {
     char *tmp = dest;
         const char *s = src; 
@@ -37,9 +37,9 @@ __global__ void grep(char *myFile, char *myregex, char *result, int line, int wi
     char *ph;
     if(i < line)
     {
-        ph = matchstring(&myFile[i*width], myregex);
+        ph = match(&myFile[i*width], myregex);
         if(ph != NULL)
-            matchcopy(&result[i*width], &myFile[i*width], sizeof(char)*width);
+            mcopy(&result[i*width], &myFile[i*width], sizeof(char)*width);
     }
 }
 
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
         file = (char **)malloc(sizeof(char*)*1024);
     result = (char *)malloc(sizeof(char)*1024*256);
     file[0] = (char *)malloc(sizeof(char)*1024*256);        
-    int i;
+    int i,j=1;
     
     if(re==NULL||fn==NULL){
         printf("input:file name expression\n");
@@ -69,11 +69,12 @@ int main(int argc, char* argv[])
     }
 
             
-    for(i = 1; i < 1024; i++)
+    while(j<1024)
 	{
-        file[i] = file[i-1] + 256;
+        file[j] = file[j-1] + 256;
 
-        fgets(file[i], 256, f);
+        fgets(file[j], 256, f);
+		j++;
 	}
 
         // Memory allocation
