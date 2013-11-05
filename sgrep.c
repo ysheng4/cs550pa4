@@ -30,15 +30,9 @@ int main(int argc, char *argv[])
 
 		   memcpy(myfile, &file[0][0], sizeof(char) * 1024*256);
 		 
-		  char *str2;
+		 
 		   while(j<1024)
 		   {
-			 if(re="w*i")
-			 {
-				str2=strstr(&myfile[j*256],"w");
-				memcpy(&result[count*256], &myfile[j*256], sizeof(char)*256);
-
-			 }
 			 
 			 str = strstr(&myfile[j*256], re);
 			 
