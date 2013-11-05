@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
             FILE *f;
 		    f = fopen(fn, "r");
 			file[0] = (char *)malloc(sizeof(char)*1024*256);
-	
+			memcpy(myfile, &file[0][0], sizeof(char) * 1024*256);
 			if(re==NULL||fn==NULL)
 			{
 			 printf("input file or string");
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 			i++;
 		   }
 
-		   memcpy(myfile, &file[0][0], sizeof(char) * 1024*256);
+		   
    
 		   while(j<1024)
 		   {
